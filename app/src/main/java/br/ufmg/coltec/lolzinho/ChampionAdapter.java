@@ -5,18 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChampionsAdapter extends BaseAdapter {
+/**
+ * Created by a2016951782 on 23/08/18.
+ */
 
+public class ChampionAdapter extends BaseAdapter {
+
+    // lista que conterá a linguagens a serem exibidas
     private List<Champion> champions;
     private Context context;
 
-
-    public ChampionsAdapter(Context context, List<Champion> champs)  {
+    public ChampionAdapter(Context context, ArrayList<Champion> champs) {
         this.context = context;
         this.champions = champs;
         //... carrega dados da lista
@@ -34,21 +39,22 @@ public class ChampionsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return 0;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Champion currentChamp = this.champions.get(i);
+        Champion champ = this.champions.get(i);
 
-        // recupera a view do adapter que será customizada
         View newView = LayoutInflater.from(this.context).inflate(R.layout.adapter_champion, viewGroup, false);
 
-        TextView nome = newView.findViewById(R.id.nameCampeao);
-        nome.setText(currentChamp.name);
+        TextView lblName = newView.findViewById(R.id.nameChampion);
+        TextView lblAuthor = newView.findViewById(R.id.titleChampion);
 
-        TextView titulo =newView.findViewById(R.id.titleCampeao);
-        titulo.setText(currentChamp.title);
+        lblName.setText(champ.nome);
+        lblAuthor.setText(champ.titulo);
+        new DownloadImageTask((ImageView) newView.findViewById(R.id.champImage))
+                .execute("http://ddragon.leagueoflegends.com/cdn/8.16.1/img/champion/"+ champ.nome  +".png");
 
         return newView;
     }

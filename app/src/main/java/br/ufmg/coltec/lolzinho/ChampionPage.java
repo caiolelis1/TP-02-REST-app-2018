@@ -1,6 +1,5 @@
 package br.ufmg.coltec.lolzinho;
 
-import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -13,18 +12,18 @@ public class ChampionPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_champion_page);
 
+        Bundle activityBundle = this.getIntent().getExtras();
+        final String nome = activityBundle.getString("nome");
+        final String titulo = activityBundle.getString("titulo");
+        final int id = activityBundle.getInt("id");
 
-        Bundle extras = getIntent().getExtras();
-        String name = extras.getString("name");
-        String title = extras.getString("title");
-        long id = extras.getLong("id");
+        TextView name = findViewById(R.id.ChampName);
+        name.setText(nome);
+        TextView title = findViewById(R.id.ChampTitle);
+        title.setText(titulo);
 
-        TextView nome = findViewById(R.id.nome);
-        nome.setText(name);
-        TextView titulo = findViewById(R.id.titulo);
-        titulo.setText(title);
+        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
+                .execute("http://ddragon.leagueoflegends.com/cdn/8.16.1/img/champion/"+ nome  +".png");
 
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView3))
-                .execute("http://ddragon.leagueoflegends.com/cdn/8.16.1/img/champion/"+ name  +".png");
     }
 }

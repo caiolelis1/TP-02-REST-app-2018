@@ -9,8 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,91 +27,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final ListView champList = findViewById(R.id.champList);
+        final ArrayList<Champion> campeoes = new ArrayList<>();
 
-        final EditText summoner = findViewById(R.id.search);
-        final Button invocador = findViewById(R.id.summoner);
-        final Button campeao = findViewById(R.id.champion);
+        SummonerService service = new RetrofitConfig().getSummonerService();
+        Call<Data> championCall = service.getChampionList();
 
-        invocador.setOnClickListener(new View.OnClickListener() {
+        championCall.enqueue(new Callback<Data>() {
             @Override
-            public void onClick(View view) {
-
-                String Invocador = summoner.getText().toString();
-
-                SummonerService service = new RetrofitConfig().getSummonerService();
-                Call<Summoner> enderecoCall = service.getSummoner(Invocador);
-
-                //fazendo a requisição de forma assíncrona
-                enderecoCall.enqueue(new Callback<Summoner>() {
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                Data newData = response.body();
+                champList.setAdapter(new ChampionAdapter(MainActivity.this, newData.champions));
+                champList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public void onResponse(Call<Summoner> call, Response<Summoner> response) {
-                        Summoner jogador = response.body();
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(MainActivity.this, ChampionPage.class);
+                        Bundle args = new Bundle();
+                        Champion currentFilme = (Champion) champList.getItemAtPosition(champList.getPositionForView(view));
 
-//                        if(jogador.name.equals(null)){
-//                            Toast toast = Toast.makeText(MainActivity.this, "Não existe invocador com este nome", Toast.LENGTH_SHORT);
-//                            toast.show();
-//                        } else {
-
-                            Intent intent = new Intent(MainActivity.this, SummonerPage.class);
-
-
-                            Bundle args = new Bundle();
-                            args.putString("name", jogador.name);
-                            args.putLong("id", jogador.id);
-                            args.putLong("accountId", jogador.accountId);
-                            args.putLong("summonerLevel", jogador.summonerLevel);
-                            args.putInt("profileIconId", jogador.profileIconId);
-                            intent.putExtras(args);
-
-                            startActivity(intent);
-//                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Summoner> call, Throwable t) {
-
+                        args.putString("nome", currentFilme.nome);
+                        args.putString("titulo", currentFilme.titulo);
+                        args.putInt("id", currentFilme.id);
+                        intent.putExtras(args);
+                        startActivity(intent);
+                        return false;
                     }
                 });
             }
-        });
 
-        campeao.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onFailure(Call<Data> call, Throwable t) {
 
-//                long championID = Long.valueOf(summoner.getText().toString());
-//
-//                SummonerService service = new RetrofitConfig().getSummonerService();
-//                Call<Champion> enderecoCall = service.getChampion(championID);
-//
-//                // fazendo a requisição de forma assíncrona
-//                enderecoCall.enqueue(new Callback<Champion>() {
-//                    @Override
-//                    public void onResponse(Call<Champion> call, Response<Champion> response) {
-//                        Champion champion = response.body();
-
-                        Intent intent = new Intent(MainActivity.this, ChampionList.class);
-
-//                        Bundle args = new Bundle();
-//                        args.putLong("id", champion.id);
-//                        args.putString("title", champion.title);
-//                        args.putString("name", champion.name);
-//                        intent.putExtras(args);
-
-                        startActivity(intent);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Champion> call, Throwable t) {
-//
-//                    }
-//
-//                });
             }
         });
-
-
-   }
-
+    }
 
 }

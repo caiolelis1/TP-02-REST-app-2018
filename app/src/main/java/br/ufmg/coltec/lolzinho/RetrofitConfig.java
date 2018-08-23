@@ -19,8 +19,7 @@ public class RetrofitConfig {
     public RetrofitConfig() {
 
         final GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(List.class, new ChampionListDeserializer());
-        gsonBuilder.registerTypeAdapter(Champion.class, new ChampionDeserialize());
+        gsonBuilder.registerTypeAdapter(Data.class, new DataDeserializer());
         final Gson gson = gsonBuilder.create();
 
         this.retrofit = new Retrofit.Builder()

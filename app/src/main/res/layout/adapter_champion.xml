@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/nameCampeao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/champImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_weight="1"
-        android:text="TextView" />
+        app:srcCompat="@android:drawable/btn_star" />
 
     <TextView
-        android:id="@+id/titleCampeao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView" />
-</LinearLayout>
+        android:id="@+id/nameChampion"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/champImage"
+        android:text=""
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/titleChampion"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/champImage"
+        android:layout_alignStart="@+id/nameChampion"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -4,37 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back1"
     tools:context="br.ufmg.coltec.lolzinho.ChampionPage">
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="202dp"
-        android:layout_height="204dp"
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="91dp"
+        app:srcCompat="@drawable/bronze_i"
+        tools:layout_editor_absoluteX="99dp"
         tools:layout_editor_absoluteY="16dp" />
 
     <TextView
-        android:id="@+id/nome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
+        android:id="@+id/ChampName"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="NOME"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="246dp" />
+        android:layout_centerVertical="true"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="285dp" />
 
     <TextView
-        android:id="@+id/titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/nome"
-        android:layout_marginBottom="182dp"
-        android:text="TITULO"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="272dp" />
+        android:id="@+id/ChampTitle"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ChampName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="325dp" />
 </RelativeLayout>
